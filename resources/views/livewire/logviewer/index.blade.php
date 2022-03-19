@@ -8,9 +8,6 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>
-
-                                    </th>
                                     <th> Level </th>
                                     <th> Date </th>
                                     <th> Message </th>
@@ -18,58 +15,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
+                                @foreach ($items as $item)
+                                    <tr>
+                                        <td>
+                                            <span class="ps-2">{{ $item['level'] }}</span>
+                                        </td>
+                                        <td> {{ $item['date'] }} </td>
+                                        <td> 02312 </td>
+                                        <td>
+                                            <div class="badge badge-outline-success">Approved</div>
+                                        </td>
+                                    </tr>
+                                @endforeach
 
-                                    </td>
-                                    <td>
-                                        <span class="ps-2">Henry Klein</span>
-                                    </td>
-                                    <td> 02312 </td>
-                                    <td> $14,500 </td>
-                                    <td>
-                                        <div class="badge badge-outline-success">Approved</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-
-                                    </td>
-                                    <td>
-                                        <span class="ps-2">Lucy Abbott</span>
-                                    </td>
-                                    <td> 02312 </td>
-                                    <td> $14,500 </td>
-                                    <td>
-                                        <div class="badge badge-outline-danger">Rejected</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-
-                                    </td>
-                                    <td>
-                                        <span class="ps-2">Peter Gill</span>
-                                    </td>
-                                    <td> 02312 </td>
-                                    <td> $14,500 </td>
-                                    <td>
-                                        <div class="badge badge-outline-success">Approved</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-
-                                    </td>
-                                    <td>
-                                        <span class="ps-2">Sallie Reyes</span>
-                                    </td>
-                                    <td> 02312 </td>
-                                    <td> $14,500 </td>
-                                    <td>
-                                        <div class="badge badge-outline-success">Approved</div>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
