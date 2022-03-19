@@ -7,7 +7,6 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Nimaw\Logviewer\Services\LogviewerService;
-use Illuminate\Support\Str;
 
 class Index extends Component
 {
@@ -21,18 +20,13 @@ class Index extends Component
 
     public function render()
     {
-        $lines = collect();
         $file = fopen(storage_path('logs/laravel.log'), 'r');
-        while (($line = stream_get_line($file, 1024 * 1024, "\n")) !== false) {
-            if (Str::startsWith($line, '[') && preg_match('/^.["["0-9]/', $line)) {
-                $lines->prepend($line);
-            }
-        }
-        dd($lines);
+        $this->lines = $this->service->getLines($file);
+        $lines = [];
         if (!is_null($this->lines)) {
             foreach ($this->lines as $line) {
                 $date = $this->service->getDate($line);
-                $content = 's';
+                $content = $this->service->getContent($line);
                 $level = $this->service->getLevel($line);
                 $lineContent = [
                     'date' => $date,
@@ -42,7 +36,7 @@ class Index extends Component
                 array_push($lines, $lineContent);
             }
         }
-        $items = $this->paginate(collect($lines));
+        $items = $this->paginate(collect($lines)->sortByDesc('date'));
         return view('logviewer::livewire.logviewer.index', [
             'items' => $items
         ])->extends('logviewer::layouts.app');

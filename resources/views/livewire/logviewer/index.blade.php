@@ -21,7 +21,9 @@
                                             <span class="ps-2">{{ $item['level'] }}</span>
                                         </td>
                                         <td> {{ $item['date'] }} </td>
-                                        <td> 02312 </td>
+                                        <td style="line-break: strict;">
+                                            {{ $item['content'] }}
+                                        </td>
                                         <td>
                                             <div class="badge badge-outline-success">Approved</div>
                                         </td>

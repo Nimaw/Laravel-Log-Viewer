@@ -3,10 +3,22 @@
 namespace Nimaw\Logviewer\Services;
 
 use Nimaw\Logviewer\Classes\LogLevels;
+use Illuminate\Support\Str;
 
 class LogviewerService
 {
-    public function getDate($str, $from = '', $to = ']')
+    public function getLines($file)
+    {
+        $lines = collect();
+        while (($line = stream_get_line($file, 1024 * 1024, "\n")) !== false) {
+            if (Str::startsWith($line, '[') && preg_match('/^.["["0-9]/', $line)) {
+                $lines->prepend($line);
+            }
+        }
+        return $lines;
+    }
+
+    public function getDate($str, $from = '[', $to = ']')
     {
         $string = substr($str, strpos($str, $from) + strlen($from));
 
@@ -20,7 +32,7 @@ class LogviewerService
     public function getLevel($line)
     {
         $levels  = LogLevels::all();
-        $chatstrArr = explode(' ', $line);
+        $chatstrArr = explode(' ', Str::lower($line));
         foreach ($chatstrArr as $k => $character) {
             foreach ($levels as $kb => $level) {
                 if (preg_match("/\.{$level}/", $character)) {
@@ -29,6 +41,11 @@ class LogviewerService
             }
         }
         return "undefined";
+    }
+
+    public function getContent($line)
+    {
+        return Str::after(Str::lower($line), "{$this->getLevel($line)}:");
     }
 
     public function getFiles()
