@@ -1,0 +1,43 @@
+{
+    "name": "nimaw/logviewer",
+    "description": "Laravel & Lumen package for viewing laravel logs",
+    "license": "MIT",
+    "keywords": [
+        "Laravel logs",
+        "Laravel logs viewer",
+        "Log viewer laravel"
+    ],
+    "authors": [{
+        "name": "Nima Tafrishi",
+        "email": "nimatafrishi@hotmail.com"
+    }],
+    "homepage": "https://github.com/nimaw",
+    "autoload": {
+        "psr-4": {
+            "Nimaw\\Logviewer\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Nimaw\\Logviewer\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": "^7.3|^8.0",
+        "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
+        "livewire/livewire": "^1.0|^2.5"
+    },
+    "require-dev": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Nimaw\\Logviewer\\LogviewerServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
