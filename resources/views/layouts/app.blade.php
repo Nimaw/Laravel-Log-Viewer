@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{{ env('APP_NAME') }} | Laravel Log viewer</title>
     <link rel="stylesheet" href="{{ asset('assets/vendor/logviewer/css/materialdesignicons.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/vendor/logviewer/css/vendor.bundle.base.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/logviewer/css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/logviewer/css/style.css') }}">
     @livewireStyles
