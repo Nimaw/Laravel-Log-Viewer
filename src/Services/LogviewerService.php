@@ -22,8 +22,8 @@ class LogviewerService
     {
         $string = substr($str, strpos($str, $from) + strlen($from));
 
-        if (strstr($string, $to, TRUE) != FALSE) {
-            $string = strstr($string, $to, TRUE);
+        if (strstr($string, $to, true) != FALSE) {
+            $string = strstr($string, $to, true);
         }
 
         return $string;

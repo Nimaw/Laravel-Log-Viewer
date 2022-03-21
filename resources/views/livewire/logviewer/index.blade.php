@@ -1,4 +1,4 @@
-@section('content')
+<div>
     <div class="row ">
         <div class="col-12 grid-margin">
             <div class="card">
@@ -34,7 +34,8 @@
                         </table>
                     </div>
                 </div>
+                {{ $items->links() }}
             </div>
         </div>
     </div>
-@endsection
+</div>

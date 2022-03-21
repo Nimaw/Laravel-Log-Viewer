@@ -6,20 +6,25 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Nimaw\Logviewer\Services\LogviewerService;
 
 class Index extends Component
 {
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
     public $lines;
     private $service;
 
     public function mount()
     {
-        $this->service = new LogviewerService();
+        $this->bindService();
     }
+
 
     public function render()
     {
+        $this->bindService();
         $file = fopen(storage_path('logs/laravel.log'), 'r');
         $this->lines = $this->service->getLines($file);
         $lines = [];
@@ -36,23 +41,11 @@ class Index extends Component
                 array_push($lines, $lineContent);
             }
         }
-        $items = $this->paginate(collect($lines)->sortByDesc('date'));
+        $items = $this->paginate(collect($lines)->sortByDesc('date'), 5);
         return view('logviewer::livewire.logviewer.index', [
             'items' => $items
-        ])->extends('logviewer::layouts.app');
-    }
-
-    function get_string_between($str, $from, $to)
-    {
-
-        $string = substr($str, strpos($str, $from) + strlen($from));
-
-        if (strstr($string, $to, TRUE) != FALSE) {
-
-            $string = strstr($string, $to, TRUE);
-        }
-
-        return $string;
+        ])->extends('logviewer::layouts.app')
+            ->section('content');
     }
 
     public function paginate($items, $perPage = 15, $page = null, $options = [])
@@ -62,5 +55,12 @@ class Index extends Component
         $items = $items instanceof Collection ? $items : Collection::make($items);
 
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
+
+    public function bindService()
+    {
+        if ($this->service === null) {
+            $this->service = new LogviewerService();
+        }
     }
 }
