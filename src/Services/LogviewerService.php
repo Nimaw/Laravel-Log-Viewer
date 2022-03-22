@@ -2,6 +2,7 @@
 
 namespace Nimaw\Logviewer\Services;
 
+use Illuminate\Support\Facades\File;
 use Nimaw\Logviewer\Classes\LogLevels;
 use Illuminate\Support\Str;
 
@@ -33,8 +34,8 @@ class LogviewerService
     {
         $levels  = LogLevels::all();
         $chatstrArr = explode(' ', Str::lower($line));
-        foreach ($chatstrArr as $k => $character) {
-            foreach ($levels as $kb => $level) {
+        foreach ($chatstrArr as $character) {
+            foreach ($levels as $level) {
                 if (preg_match("/\.{$level}/", $character)) {
                     return $level;
                 }
@@ -51,7 +52,7 @@ class LogviewerService
     public function getFiles()
     {
         $files = [];
-        if ($handle = opendir(config('logviewer.logs_path'))) {
+        if ($handle = opendir(config('logviewer.logs_path', storage_path('logs/')))) {
             while (false !== ($entry = readdir($handle))) {
                 if (preg_match('/\.log$/', $entry)) {
                     array_push($files, $entry);
@@ -60,5 +61,14 @@ class LogviewerService
             closedir($handle);
         }
         return $files;
+    }
+
+    public function resolveLogsPath()
+    {
+        $path = config('logviewer.logs_path', storage_path('logs/laravel.log'));
+        if (File::exists($path)) {
+            return $path;
+        }
+        // TODO implement throwable
     }
 }

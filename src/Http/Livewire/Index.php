@@ -25,7 +25,7 @@ class Index extends Component
     public function render()
     {
         $this->bindService();
-        $file = fopen(storage_path('logs/laravel.log'), 'r');
+        $file = fopen($this->service->resolveLogsPath(), 'r');
         $this->lines = $this->service->getLines($file);
         $lines = [];
         if (!is_null($this->lines)) {
@@ -41,7 +41,8 @@ class Index extends Component
                 array_push($lines, $lineContent);
             }
         }
-        $items = $this->paginate(collect($lines)->sortByDesc('date'), 5);
+
+        $items = $this->paginate(collect($lines)->sortByDesc('date'), config('logviewer.per_page', 15));
         return view('logviewer::livewire.logviewer.index', [
             'items' => $items
         ])->extends('logviewer::layouts.app')
@@ -59,7 +60,7 @@ class Index extends Component
 
     public function bindService()
     {
-        if ($this->service === null) {
+        if (is_null($this->service)) {
             $this->service = new LogviewerService();
         }
     }
