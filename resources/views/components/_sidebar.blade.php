@@ -1,15 +1,12 @@
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
-    <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-        <a class="sidebar-brand brand-logo" href="#"></a>
-        <a class="sidebar-brand brand-logo-mini" href="#"></a>
-    </div>
+
     <ul class="nav">
 
         <li class="nav-item nav-category">
             <span class="nav-link">Menu</span>
         </li>
         <li class="nav-item menu-items">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="{{ route('logviewer.index') }}">
                 <span class="menu-icon">
                     <i class="mdi mdi-speedometer"></i>
                 </span>
@@ -22,7 +19,7 @@
                 <span class="menu-icon">
                     <i class="mdi mdi-laptop"></i>
                 </span>
-                <span class="menu-title">Basic UI Elements</span>
+                <span class="menu-title">Files</span>
                 <i class="menu-arrow"></i>
             </a>
             <div class="collapse" id="ui-basic">

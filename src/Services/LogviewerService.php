@@ -8,12 +8,18 @@ use Illuminate\Support\Str;
 
 class LogviewerService
 {
-    public function getLines($file)
+    public function getLines($file, $keyword = null)
     {
         $lines = collect();
         while (($line = stream_get_line($file, 1024 * 1024, "\n")) !== false) {
             if (Str::startsWith($line, '[') && preg_match('/^.["["0-9]/', $line)) {
-                $lines->prepend($line);
+                if ($keyword != null) {
+                    if (Str::contains($line, $keyword)) {
+                        $lines->prepend($line);
+                    }
+                } else {
+                    $lines->prepend($line);
+                }
             }
         }
         return $lines;
@@ -63,12 +69,19 @@ class LogviewerService
         return $files;
     }
 
-    public function resolveLogsPath()
+    public function getFile($file)
     {
-        $path = config('logviewer.logs_path', storage_path('logs/laravel.log'));
-        if (File::exists($path)) {
-            return $path;
+        $file = $file == null ? config('logviewer.default_log') : $file;
+        return fopen($this->resolveLogsPath($file), 'r');
+    }
+
+    public function resolveLogsPath($file = null)
+    {
+        $path = config('logviewer.logs_path' . $file, storage_path('logs/' . $file));
+        if (!File::exists($path)) {
+            return [];
         }
+        return $path;
         // TODO implement throwable
     }
 }

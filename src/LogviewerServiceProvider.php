@@ -35,9 +35,7 @@ class LogviewerServiceProvider extends ServiceProvider
     {
         $this->publishes([__DIR__ . '/../config/logviewer.php' => config_path('logviewer.php')], 'logviewer-config');
 
-        $this->publishes([__DIR__ . '/../resources/views' => resource_path('/views/vendor/logviewer')], 'logviewer-views');
-
-        $this->publishes([__DIR__ . '/../resources/assets' => public_path('/assets/vendor/logviewer')], 'logviewer-assets');
+        $this->publishes([__DIR__ . '/../resources/assets' => public_path('vendor/logviewer/assets/')], 'logviewer-assets');
     }
 
     private function registerLivewireComponents()

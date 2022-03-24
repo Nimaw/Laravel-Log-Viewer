@@ -4,6 +4,11 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Logs</h4>
+                    <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
+                        <input type="text" class="form-control" placeholder="Search between Level, Content, Date"
+                            wire:model.debounce.500ms="keyword">
+                    </form>
+
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -11,7 +16,6 @@
                                     <th> Level </th>
                                     <th> Date </th>
                                     <th> Message </th>
-                                    <th> status </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -22,10 +26,7 @@
                                         </td>
                                         <td> {{ $item['date'] }} </td>
                                         <td style="line-break: strict;">
-                                            {{ $item['content'] }}
-                                        </td>
-                                        <td>
-                                            <div class="badge badge-outline-success">Approved</div>
+                                            {!! $item['content'] !!}
                                         </td>
                                     </tr>
                                 @endforeach

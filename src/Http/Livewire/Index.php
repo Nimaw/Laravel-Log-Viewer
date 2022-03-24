@@ -5,6 +5,7 @@ namespace Nimaw\Logviewer\Http\Livewire;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Nimaw\Logviewer\Services\LogviewerService;
@@ -12,21 +13,23 @@ use Nimaw\Logviewer\Services\LogviewerService;
 class Index extends Component
 {
     use WithPagination;
-    protected $paginationTheme = 'bootstrap';
-    public $lines;
+    public $lines, $file, $keyword;
     private $service;
+    protected $queryString = [
+        'file'
+    ];
+    protected $paginationTheme = 'bootstrap';
 
     public function mount()
     {
         $this->bindService();
     }
 
-
     public function render()
     {
         $this->bindService();
-        $file = fopen($this->service->resolveLogsPath(), 'r');
-        $this->lines = $this->service->getLines($file);
+        $file = $this->service->getFile($this->file);
+        $this->lines = $this->service->getLines($file, $this->keyword);
         $lines = [];
         if (!is_null($this->lines)) {
             foreach ($this->lines as $line) {
@@ -35,7 +38,7 @@ class Index extends Component
                 $level = $this->service->getLevel($line);
                 $lineContent = [
                     'date' => $date,
-                    'content' => $content,
+                    'content' => $this->keyword != null ? preg_replace("/($this->keyword)/i", "<span class='highlight'>{$this->keyword}</span>", $content) : $content,
                     'level' => $level
                 ];
                 array_push($lines, $lineContent);
