@@ -5,7 +5,6 @@ namespace Nimaw\Logviewer\Http\Livewire;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Nimaw\Logviewer\Services\LogviewerService;
@@ -20,11 +19,6 @@ class Index extends Component
         'type'
     ];
     protected $paginationTheme = 'bootstrap';
-
-    public function mount()
-    {
-        $this->bindService();
-    }
 
     public function render()
     {
