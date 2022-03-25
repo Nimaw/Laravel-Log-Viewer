@@ -82,6 +82,10 @@ class LogviewerService
             return [];
         }
         return $path;
-        // TODO implement throwable
+    }
+
+    public function levels()
+    {
+        return LogLevels::all();    
     }
 }

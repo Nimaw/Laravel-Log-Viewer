@@ -13,10 +13,11 @@ use Nimaw\Logviewer\Services\LogviewerService;
 class Index extends Component
 {
     use WithPagination;
-    public $lines, $file, $keyword;
+    public $lines, $file, $keyword, $type;
     private $service;
     protected $queryString = [
-        'file'
+        'file',
+        'type'
     ];
     protected $paginationTheme = 'bootstrap';
 
@@ -47,7 +48,8 @@ class Index extends Component
 
         $items = $this->paginate(collect($lines)->sortByDesc('date'), config('logviewer.per_page', 15));
         return view('logviewer::livewire.logviewer.index', [
-            'items' => $items
+            'items' => $items,
+            'levels' => $this->service->levels(),
         ])->extends('logviewer::layouts.app')
             ->section('content');
     }
