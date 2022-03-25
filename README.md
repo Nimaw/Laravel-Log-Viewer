@@ -6,7 +6,7 @@ You can search, view, filter logs and switch log files.
 # Installation
 
 ```
-composer require nimaw/laravel-logviewer
+composer require nimaw/logviewer
 ```
 
 # Seting up laravel logviewer
@@ -31,4 +31,4 @@ php artisan vendor:publish --tag=logviewer-config
 
 # Note
 
-By default laravel log viewer need to authoticated to access to dashboard, If you don't need thisn future you can easly remove "auth" middleware on config file.
+By default laravel log viewer need to authenticate to access to dashboard, If you do not need this future you can easily remove "auth" middleware on config file.
