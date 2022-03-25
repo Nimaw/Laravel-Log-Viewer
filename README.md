@@ -6,7 +6,7 @@ You can search, view, filter logs and switch log files.
 # Installation
 
 ```
-composer require nimaw/laravel-logviewer
+composer require nimaw/logviewer
 ```
 
 # Seting up laravel logviewer
