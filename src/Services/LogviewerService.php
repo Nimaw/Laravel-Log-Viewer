@@ -79,13 +79,13 @@ class LogviewerService
     {
         $path = config('logviewer.logs_path' . $file, storage_path('logs/' . $file));
         if (!File::exists($path)) {
-            return [];
+            return config('logviewer.default_log');
         }
         return $path;
     }
 
     public function levels()
     {
-        return LogLevels::all();    
+        return LogLevels::all();
     }
 }
